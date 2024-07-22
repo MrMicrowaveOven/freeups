@@ -9,15 +9,15 @@ SINGLE_PERK_NAMES = %w(
     spotlight_damage_bonus
     damage_for_boss_health
     coins_for_health
-    # enemy_health_for_lifesteal
     damage_for_damage
-    # range_for_damage
-    # enemy_speed_for_enemy_damage
     wave_cash_for_kills_cash
-    # regen_for_health
     boss_health_for_boss_speed
     lifesteal_for_knockback
 )
+    # enemy_health_for_lifesteal
+    # range_for_damage
+    # enemy_speed_for_enemy_damage
+    # regen_for_health
 DOUBLE_PERK_NAMES = %w(
     orbs
     random_ultimate_weapon
@@ -38,3 +38,8 @@ QUINTUPLE_PERK_NAMES = %w(
     defense_percent
     free_upgrade_chance
 )
+
+PERK_PREFERENCE = [
+    "perk_wave_requirement",
+    "free_upgrade_chance",
+] + SINGLE_PERK_NAMES + DOUBLE_PERK_NAMES + TRIPLE_PERK_NAMES + QUINTUPLE_PERK_NAMES

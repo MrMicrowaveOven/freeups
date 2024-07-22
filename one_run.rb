@@ -18,6 +18,7 @@ def do_runs(num_runs)
     p "skips: #{skips.round}, waves: #{waves.round}"
     # p "waves: #{waves}"
 end
-10.times do |i|
-    do_runs(10000)
-end
+# 5.times do |i|
+#     do_runs(1000)
+# end
+do_runs(1)

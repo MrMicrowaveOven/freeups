@@ -3,12 +3,10 @@ require_relative 'perk'
 
 BASE_UPGRADE_CHANCE = 0.6758
 PERK_ADDITION = 0.0625
-ELS_BASE_SKIP_CHANCE = 0.30
+ELS_BASE_SKIP_CHANCE = 0.20
 # ELS_BASE_SKIP_CHANCE = 0.0
 MAX_ELS_BASE_SKIP_CHANCE = 0.40
 ELS_CHANCE_INCREASE = 0.0005
-
-PERK_WAVE = 187
 
 class Run
     def initialize
@@ -74,10 +72,32 @@ class Run
         # p "ELHS Chance #{@elhs_skip_chance}"
         els_check
         free_upgrade_check
+        if Perk.is_perk_wave(@wave, num_perks, num_pwr_perks)
+            Perk.select_perk(@perks)
+            p "=========================="
+            levelled_perks = @perks.select {|perk| perk.perk_level > 0}
+            p levelled_perks.map {|perk| [perk.perk_name, perk.perk_level]}
+        end
+        @upgrade_chance = BASE_UPGRADE_CHANCE + PERK_ADDITION * num_free_upgrade_perks
         @wave += 1
     end
 
+    def num_perks
+        @perks.map {|perk| perk.perk_level}.sum
+    end
+
+    def num_pwr_perks
+        @perks.find{|perk| perk.perk_name == 'perk_wave_requirement'}.perk_level
+    end
+
+    def num_free_upgrade_perks
+        @perks.find{|perk| perk.perk_name == 'free_upgrade_chance'}.perk_level
+    end
+
     def do_run
+        # TODO: This should work with == instead of >=, but for some
+        # reason this leads to a bug where the skip chance can get
+        # greater than .4.  Skipping this issue for now
         until (@elas_skip_chance >= MAX_ELS_BASE_SKIP_CHANCE && @elhs_skip_chance >= MAX_ELS_BASE_SKIP_CHANCE)
             one_wave
         end
