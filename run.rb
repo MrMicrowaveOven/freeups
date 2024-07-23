@@ -1,4 +1,3 @@
-require_relative 'perk_constants'
 require_relative 'perk'
 
 BASE_UPGRADE_CHANCE = 0.6758

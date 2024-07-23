@@ -1,3 +1,4 @@
+require_relative 'perk_constants'
 PERK_WAVE = 187
 FIRST_PERK = "free_upgrade_chance"
 # FIRST_PERK = "perk_wave_requirement"
@@ -13,6 +14,9 @@ class Perk
         num_perks = perks.map {|perk| perk.perk_level}.sum
         if num_perks == 0
             perk = perks.find{|perk| perk.perk_name == FIRST_PERK}
+            if !perk
+                raise 'First perk not found'
+            end
             perk.level_up
             return
         end
