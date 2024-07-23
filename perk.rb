@@ -1,16 +1,17 @@
 PERK_WAVE = 187
-# FIRST_PERK = "free_upgrade_chance"
-FIRST_PERK = "perk_wave_requirement"
+FIRST_PERK = "free_upgrade_chance"
+# FIRST_PERK = "perk_wave_requirement"
 
 class Perk
     attr_reader :perk_name, :perk_level
     def self.is_perk_wave(wave_number, num_perks, num_pwr_perks)
-        waves_required = PERK_WAVE * (1 - (num_pwr_perks * 0.25)) * (num_perks + 1)
+        waves_required = (PERK_WAVE * (1 - (num_pwr_perks * 0.25)) * (num_perks + 1)).floor
         wave_number === waves_required
     end
 
     def self.select_perk(perks)
-        if perks.count == 0
+        num_perks = perks.map {|perk| perk.perk_level}.sum
+        if num_perks == 0
             perk = perks.find{|perk| perk.perk_name == FIRST_PERK}
             perk.level_up
             return
