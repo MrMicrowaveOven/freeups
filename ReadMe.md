@@ -46,25 +46,35 @@ For the sake of this simulation, we'll take both scenarios to Wave 3000 and calc
 
 # The Simulation
 
-We will simulate a _run_ many times.  First we will simulate with `free_upgrade_chance` set as our first upgrade, then we will simulate with `perk_wave_requirement` as our first upgrade.  The general consensus is that `perk_wave_requirement` is the better choice for the Second Perk, but we can play with that afterwards.
+We will simulate a _run_ many times.  First we will simulate with `free_upgrade_chance` set as our first upgrade, then we will simulate with `perk_wave_requirement` as our first upgrade.  The general consensus is that `perk_wave_requirement` is the better choice for the Second Perk, but we can play with that afterwards.  For now we'll focus on First Perk Choice.
 
-A _run_ will step through, wave by wave, and have a chance of upgrading ELS each time.  One the waves where I would get a Perk, 4 Perks will be selected and the prioritized Perk will be selected.  In the case of the First Perk, the chosen Perk will simply be chosen (since that is guaranteed).
+A _run_ will step through, wave by wave, and have a chance of upgrading ELS each time.  On the waves where I would get a Perk, 4 Perks will be selected and the prioritized Perk will be selected.  In the case of the First Perk, the chosen Perk will simply be chosen (since that is guaranteed).
 
-In addition, every wave will also have a chance to skip enemy level, based on the ELS at the time.  The total number of skips in the run will be recorded, and will be the primary calculation for the best strategy.
+In addition, every wave will also have a chance to skip enemy level, based on the ELS at the time.  The total number of skips in the run will be recorded, and will be the primary calculation for finding the best strategy.
 
 For completionist's sake, we'll also display how many Free Upgrade Perks each run gets depending on the situation.
 
 ## run.rb
 
-This class defines a single run.  Each run it sets the base upgrade_chance, els_bask_skip_chance, creates all the Perks (`perk.rb`) at Level 0, and sets all counters to 0 for the run.  When `do_run` is called, it moves wave-by-wave and calculates each of the upgrades and enemy_level_skips.  When the time comes for a Perk, it calls `select_perk` on Perk which randomly selects 4 Perks and picks the preferred Perk (or picks the First Perk choice in the case of the First Perk).
+This class defines a single run.  Each run it sets the base upgrade_chance, els_base_skip_chance, creates all the Perks (`perk.rb`) at Level 0, and sets all counters to 0 for the run.  When `do_run` is called, it moves wave-by-wave and calculates each of the upgrades and enemy_level_skips.  When the time comes for a Perk, it calls `select_perk` on Perk which randomly selects 4 Perks and picks the preferred Perk (or picks the First Perk choice in the case of the First Perk).
 
 This runs until Wave 3000.  Once ELS is maxed, it stops upgrading but continues to calculate skips.  The strategy with the most skips wins.
 
 ## perk.rb
 
-Each Perk represents a single type of perk.  One will be created for each type of perk at the beginning of a run, all at Level 0.  When the time comes for a perk to be selected, this class will decide which perks will be randomly chosen and selected.
+Each Perk represents a single type of perk.  One will be created for each type of perk at the beginning of a run, all at Level 0.  When the time comes for a perk to be selected, this class will decide which perks will be randomly chosen and selected (level will increase by 1).
 
-All perk data (names of perks, perk preference) is stored as constants in `perk_constants.rb`.
+All perk constants (names of perks, perk preference order) are stored in `perk_constants.rb`.
+
+## perk_constants.rb
+
+This has the names of all possible perks.  The names are not really relevant to this simulation, but I entered them all for completionist's sake.
+
+They are sorted by max level.  So `SINGLE_PERK_NAMES` has all the perks that max out at Level 1, `DOUBLE_PERK_NAMES` all max out at Level 2, and so on.
+
+`PERK_PREFERENCE` lists all the perks by preference, meaning perks at the top of the list will be chosen over those at the bottom.  free_upgrade_chance and perk_wave_requirement are at the top of the list.  SINGLE_PERKs are preferred after that, so that they are maxed out and removed from the list of possible Perks.  This increases the chance of the next perk being free_upgrade_chance or perk_wave_requirement.
+
+Some possible Perks are commented out.  In the game, the player can "ban" certain perks, meaning they will not be randomly selected.  The commented Perks are the ones that I have banned.
 
 ## do_runs.rb
 
