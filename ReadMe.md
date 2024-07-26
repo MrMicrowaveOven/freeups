@@ -51,3 +51,31 @@ A _run_ will step through, wave by wave, and have a chance of upgrading ELS each
 In addition, every wave will also have a chance to skip enemy level, based on the ELS at the time.  The total number of skips in the run will be recorded, and will be the primary calculation for the best strategy.
 
 For completionist's sake, we'll also display how many Free Upgrade Perks each run gets depending on the situation.
+
+## run.rb
+
+This class defines a single run.  Each run it sets the base upgrade_chance, els_bask_skip_chance, creates all the Perks (`perk.rb`) at Level 0, and sets all counters to 0 for the run.  When `do_run` is called, it moves wave-by-wave and calculates each of the upgrades and enemy_level_skips.  When the time comes for a Perk, it calls `select_perk` on Perk which randomly selects 4 Perks and picks the preferred Perk (or picks the First Perk choice in the case of the First Perk).
+
+This runs until Wave 3000.  Once ELS is maxed, it stops upgrading but continues to calculate skips.  The strategy with the most skips wins.
+
+## perk.rb
+
+Each Perk represents a single type of perk.  One will be created for each type of perk at the beginning of a run, all at Level 0.  When the time comes for a perk to be selected, this class will decide which perks will be randomly chosen and selected.
+
+All perk data (names of perks, perk preference) is stored as constants in `perk_constants.rb`.
+
+## do_runs.rb
+
+This is called to simulate multiple runs.  I generally do 5 rounds of 1000 runs each, just to see that the conclusions are consistent.  After the runs are complete, the following data will be displayed:
+
+__skips__: How many enemy levels were skipped during the run.  This is averaged over all 1000 runs.
+
+__waves__: The wave the run was completed on.  Since we're running to Wave 3000, this will be consistent.  However, other calculations might call for the simulator to run until ELS is maxed, so the wave could be a variable in certain situations.  This is averaged over all 1000 runs.
+
+__num_upgrade_perks__: This displays how many free_upgrade_chance_perks were acquired up until ELS was maxed.  It's an array showing how many runs reached how many perks (starting at 0).  So for example, an array of `[5, 3, 6, 2, 1, 0]` means that 5 runs acquired 0 free_upgrade_chance_perks, 3 runs acquired 1 free_upgrade_chance_perks, 6 acquired 2, 2 acquired 3, 1 run acquired 4, and 0 runs acquired all 5 free_upgrade_chance_perks.
+
+__total__: This is the total of all runs, `17` in the above example.
+
+# Results
+
+(coming soon)
