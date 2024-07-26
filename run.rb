@@ -16,7 +16,7 @@ class Run
         @num_attack_skips = 0
         @num_health_skips = 0
         @perks = make_perks
-        do_run
+        # do_run
     end
 
     def make_perks
@@ -38,7 +38,10 @@ class Run
 
     def free_upgrade_check
         if rand < @upgrade_chance
-            if @elas_skip_chance < MAX_ELS_BASE_SKIP_CHANCE && @elas_skip_chance < MAX_ELS_BASE_SKIP_CHANCE
+            # p "==============="
+            # p @elas_skip_chance
+            # p @elhs_skip_chance
+            if @elas_skip_chance < MAX_ELS_BASE_SKIP_CHANCE && @elhs_skip_chance < MAX_ELS_BASE_SKIP_CHANCE
                 if rand < 0.5
                     @elas_skip_chance += ELS_CHANCE_INCREASE
                     @elas_skip_chance = round(@elas_skip_chance)
@@ -97,7 +100,7 @@ class Run
         # TODO: This should work with == instead of >=, but for some
         # reason this leads to a bug where the skip chance can get
         # greater than .4.  Skipping this issue for now
-        until (@elas_skip_chance >= MAX_ELS_BASE_SKIP_CHANCE && @elhs_skip_chance >= MAX_ELS_BASE_SKIP_CHANCE)
+        until (@wave === 2000)
             one_wave
         end
         # p "Num Attack Skips:"
