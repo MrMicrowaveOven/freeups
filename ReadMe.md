@@ -14,7 +14,7 @@ One of the upgrades is the chance to get a free _upgrade_ every wave.  This save
 
 ## Enemy Level Skip
 
-Another of the upgrades is the ability for enemies to not gain a level on a wave (__enemy_level_skip__, or __ELS__).  So if you're on Wave 10 and 1 level was skipped, enemies will be the strength of level 9.  On level 20, they will be the strength of level 19, and so on.  You want a lot of these.  Mine starts at `19%`, and maxes out at `42%`, with each upgrade increasing my probability by `%0.05%`.  These get very expensive during the run, so the only way to max them out is with Free Upgrades.
+Another of the upgrades is the chance for enemies to not gain a level on a wave (__enemy_level_skip__, or __ELS__).  So if you're on Wave 10 and 1 level was skipped, enemies will be the strength of level 9.  On level 20, they will be the strength of level 19, and so on.  You want a lot of these.  Mine starts at `19%`, and maxes out at `42%`, with each upgrade increasing my probability by `%0.05%`.  These get very expensive during the run, so the only way to max them out is with Free Upgrades.
 
 You also want these maxed out as soon as possible during a run, so that more waves will be skipped throughout the run.  Maxing out ELS at `42%` on Wave 1000 will cause a lot more enemy levels to be skipped than maxing it out on Wave 2000.
 
@@ -30,11 +30,13 @@ __free_upgrade_chance_perk__ increases your chances of a free upgrade each wave 
 
 __perk_wave_requirement_decrease__ decreases the wave requirement for perks by `25%`.  In other words, while I can generally pick my second perk at Wave 374, if I've picked perk_wave_requirement_decrease as my first perk my second perk will come at (1 - .25) * 374 = 285.5, or Wave 285.  This can be great for getting Perks early during a run, and it generally pays for itself quickly.
 
-You can get 3 perk_wave_requirement_decrease Perks during a run, which maxes out at decreasing the wave requirement for perks by 75%.
+You can get 3 perk_wave_requirement_decrease Perks during a run, which maxes out at decreasing the wave requirement for perks by 75%.  In addition, if selected AFTER a Perk would have been gained with perk_wave_requirement_decrease, Perks are given retroactively.  So if selected later in a run (Wave 2000 or so), all Perks that would have been recieved with the reduced requirement are given, hence multiple Perks are given at once.
 
-Finally, I can choose a Perk to always appear on my list of selectable perks as my FIRST Perk.  Meaning I can choose what my first Perk will be every run.  After that it is entirely random.
+Finally, I can choose a Perk to always appear on my list of selectable perks as my FIRST Perk.  Meaning I can choose what my first Perk will be every run.  After that I can select from one of 4 perks that are chosen at random.
 
-So the question is, if my primary goal is to max out __ELS__ as early as possible, is it more strategic for my first Perk choice to be __free_upgrade_chance_perk__ (more free upgrades to max it out sooner), or for my first Perk choice to be __perk_wave_requirement_decrease__ (more perks, hence more free upgrades to max it out sooner).
+## The Question
+
+If my primary goal is to max out __ELS__ as early as possible, is it more strategic for my first Perk choice to be __free_upgrade_chance_perk__ (more free upgrades to max it out sooner), or for my first Perk choice to be __perk_wave_requirement_decrease__ (more perks, hence more free upgrades to max it out sooner).
 
 EVERYONE says __perk_wave_requirement_decrease__ is the way to go.  However, since my __ELS__ maxes out so soon (around wave 1500), it's possible that __perk_wave_requirement_decrease__ doesn't have enough time to "pay for itself" to benefit me more than just picking __free_upgrade_chance_perk__ first.
 
