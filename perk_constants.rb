@@ -31,7 +31,7 @@ QUINTUPLE_PERK_NAMES = %w(
     damage
     health_regen
     coins_bonus
-    interest
+    # interest
     land_mine_damage
     cash_bonus
     defense_absolute

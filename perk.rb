@@ -10,7 +10,7 @@ class Perk
         wave_number === waves_required
     end
 
-    def self.select_perk(perks)
+    def self.select_perk(perks, report = false)
         num_perks = perks.map {|perk| perk.perk_level}.sum
         if num_perks == 0
             perk = perks.find{|perk| perk.perk_name == FIRST_PERK}
@@ -18,6 +18,9 @@ class Perk
                 raise 'First perk not found'
             end
             perk.level_up
+            if report
+                p "Upgraded perk: #{perk.perk_name}"
+            end
             return
         end
         levelable_perks = perks.select {|perk| !perk.maxed}
@@ -25,6 +28,7 @@ class Perk
         PERK_PREFERENCE.each do |preferred_perk|
             if perk = perks_presented.find{|perk| perk.perk_name == preferred_perk}
                 perk.level_up
+                # p "Upgraded perk: #{perk.perk_name}"
                 break
             end
         end

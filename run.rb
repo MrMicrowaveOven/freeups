@@ -7,6 +7,8 @@ ELS_BASE_SKIP_CHANCE = 0.19
 MAX_ELS_BASE_SKIP_CHANCE = 0.42
 ELS_CHANCE_INCREASE = 0.0005
 
+REPORT_DURING_RUN = false
+
 class Run
     def initialize
         @wave = 1
@@ -49,12 +51,15 @@ class Run
                     @elhs_skip_chance += ELS_CHANCE_INCREASE
                     @elhs_skip_chance = round(@elhs_skip_chance)
                 end
+                @num_free_upgrade_perks_at_max = num_free_upgrade_perks
             elsif @elas_skip_chance < MAX_ELS_BASE_SKIP_CHANCE
                 @elas_skip_chance += ELS_CHANCE_INCREASE
                 @elas_skip_chance = round(@elas_skip_chance)
+                @num_free_upgrade_perks_at_max = num_free_upgrade_perks
             elsif @elhs_skip_chance < MAX_ELS_BASE_SKIP_CHANCE
                 @elhs_skip_chance += ELS_CHANCE_INCREASE
                 @elhs_skip_chance = round(@elhs_skip_chance)
+                @num_free_upgrade_perks_at_max = num_free_upgrade_perks
             end
         end
     end
@@ -69,13 +74,26 @@ class Run
     end
 
     def one_wave
-        # p "Wave #{@wave}"
-        # p "ELAS Chance #{@elas_skip_chance}"
-        # p "ELHS Chance #{@elhs_skip_chance}"
+        if REPORT_DURING_RUN
+            p "=================WAVE REPORT================="
+            p "Wave #{@wave}"
+            p "Perks:"
+        end
+        relevent_perks = @perks.select {|perk| perk.perk_level > 0}
+        relevent_perks.each do |perk|
+            if REPORT_DURING_RUN
+                p "     #{perk.perk_name}: #{perk.perk_level}"
+            end
+        end
+        if REPORT_DURING_RUN
+            p "Upgrade Chance: #{@upgrade_chance}"
+            p "ELAS Chance #{@elas_skip_chance}"
+            p "ELHS Chance #{@elhs_skip_chance}"
+        end
         els_check
         free_upgrade_check
         if Perk.is_perk_wave(@wave, num_perks, num_pwr_perks)
-            Perk.select_perk(@perks)
+            Perk.select_perk(@perks, REPORT_DURING_RUN)
             # p "=========================="
             # levelled_perks = @perks.select {|perk| perk.perk_level > 0}
             # p levelled_perks.map {|perk| [perk.perk_name, perk.perk_level]}
@@ -100,7 +118,7 @@ class Run
         # TODO: This should work with == instead of >=, but for some
         # reason this leads to a bug where the skip chance can get
         # greater than .4.  Skipping this issue for now
-        until (@wave === 2000)
+        until (@wave === 3000)
             one_wave
         end
         # p "Num Attack Skips:"
@@ -109,6 +127,7 @@ class Run
         # p @num_health_skips
         # p "run done!"
         {
+            upgrade_perks: @num_free_upgrade_perks_at_max,
             skips: @num_attack_skips + @num_health_skips,
             waves: @wave
         }
