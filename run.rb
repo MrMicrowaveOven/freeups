@@ -18,7 +18,6 @@ class Run
         @num_attack_skips = 0
         @num_health_skips = 0
         @perks = make_perks
-        # do_run
     end
 
     def make_perks
@@ -129,7 +128,8 @@ class Run
         {
             upgrade_perks: @num_free_upgrade_perks_at_max,
             skips: @num_attack_skips + @num_health_skips,
-            waves: @wave
+            waves: @wave,
+            is_maxed: @elas_skip_chance == MAX_ELS_BASE_SKIP_CHANCE && @elhs_skip_chance == MAX_ELS_BASE_SKIP_CHANCE
         }
     end
 end

@@ -40,6 +40,6 @@ QUINTUPLE_PERK_NAMES = %w(
 )
 
 PERK_PREFERENCE = [
-    "perk_wave_requirement",
     "free_upgrade_chance",
+    "perk_wave_requirement",
 ] + SINGLE_PERK_NAMES + DOUBLE_PERK_NAMES + TRIPLE_PERK_NAMES + QUINTUPLE_PERK_NAMES
