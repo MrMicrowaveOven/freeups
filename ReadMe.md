@@ -1,6 +1,6 @@
 # The Tower Idle Upgrade Simulator
 
-This is a simulator for the mobile game Tower Idle.  I'll start with a brief introduction on the game and what upgrades are, and then explain the data this is building.
+This is a simulator for the mobile game Tower Idle.  I'll start with a brief introduction on the game and what upgrades are, and then explain the data that this is building.
 
 # The Game
 
@@ -16,7 +16,7 @@ One of the upgrades is the chance to get a free _upgrade_ every wave.  This save
 
 Another of the upgrades is the chance for enemies to not gain a level on a wave (__enemy_level_skip__, or __ELS__).  So if you're on Wave 10 and 1 level was skipped, enemies will be the strength of level 9.  On level 20, they will be the strength of level 19, and so on.  You want a lot of these.  Mine starts at `19%`, and maxes out at `42%`, with each upgrade increasing my probability by `%0.05%`.  These get very expensive during the run, so the only way to max them out is with Free Upgrades.
 
-You also want these maxed out as soon as possible during a run, so that more waves will be skipped throughout the run.  Maxing out ELS at `42%` on Wave 1000 will cause a lot more enemy levels to be skipped than maxing it out on Wave 2000.
+You also want these maxed out as soon as possible during a run, so that more enemy levels will be skipped throughout the run.  Maxing out ELS at `42%` on Wave 1000 will cause a lot more enemy levels to be skipped than maxing it out on Wave 2000.
 
 We're almost done.  Now let's talk about __Perks__
 
@@ -26,13 +26,13 @@ During a run, on certain waves, the player can choose one of 4 randomly-selected
 
 The only two relevant Perks to this simulation are __free_upgrade_chance_perk__ and __perk_wave_requirement_decrease__.
 
-__free_upgrade_chance_perk__ increases your chances of a free upgrade each wave by `6.25%`.  This perk is the single most important perk to maxing out __ELS__ early, since you'll get more free upgrades sooner.  You can get 5 of them in a run, which eventually increases my Free Upgrade Chance to `98.84%`.
+__free_upgrade_chance_perk__ increases your chances of a free upgrade each wave by `6.25%`.  This perk is the single most important perk to maxing out __ELS__ early, since you'll get more free upgrades sooner.  You can get 5 of them in a run, which eventually increases my Free Upgrade Chance to `99.83%`.
 
-__perk_wave_requirement_decrease__ decreases the wave requirement for perks by `25%`.  In other words, while I can generally pick my second perk at Wave 374, if I've picked perk_wave_requirement_decrease as my first perk my second perk will come at (1 - .25) * 374 = 285.5, or Wave 285.  This can be great for getting Perks early during a run, and it generally pays for itself quickly.
+__perk_wave_requirement_decrease__ decreases the wave requirement for perks by `25%`.  In other words, while I can generally pick my second perk at Wave 374, if I've picked perk_wave_requirement_decrease as my first perk, my second perk will come at (1 - .25) * 374 = 285.5, or Wave 285.  This can be great for getting Perks early during a run, and it generally pays for itself quickly.
 
 You can get 3 perk_wave_requirement_decrease Perks during a run, which maxes out at decreasing the wave requirement for perks by 75%.  In addition, if selected AFTER a Perk would have been gained with perk_wave_requirement_decrease, Perks are given retroactively.  So if selected later in a run (Wave 2000 or so), all Perks that would have been recieved with the reduced requirement are given, hence multiple Perks are given at once.
 
-Finally, I can choose a Perk to always appear on my list of selectable perks as my FIRST Perk.  Meaning I can choose what my first Perk will be every run.  After that I can select from one of 4 perks that are chosen at random.
+Finally, I can choose a Perk to always appear on my list of selectable perks as my FIRST Perk.  Meaning I can choose what my first Perk will be every run.  For every Perk thereafter I will select from one of 4 perks that are chosen at random.
 
 ## The Question
 
@@ -80,7 +80,7 @@ Some possible Perks are commented out.  In the game, the player can "ban" certai
 
 This is called to simulate multiple runs.  I generally do 5 rounds of 1000 runs each, just to see that the conclusions are consistent.  After the runs are complete, the following data will be displayed:
 
-__skips__: How many enemy levels were skipped during the run.  This is averaged over all 1000 runs.
+__skips__: How many enemy levels were skipped during the run.  This is averaged over all 1000 runs.  This is the primary determining factor in the better strategy.
 
 __waves__: The wave the run was completed on.  Since we're running to Wave 3000, this will be consistent.  However, other calculations might call for the simulator to run until ELS is maxed, so the wave could be a variable in certain situations.  This is averaged over all 1000 runs.
 
@@ -90,4 +90,4 @@ __total__: This is the total of all runs, `17` in the above example.
 
 # Results
 
-(coming soon)
+![results](results.png "Results")
