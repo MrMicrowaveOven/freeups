@@ -97,3 +97,13 @@ As you can see from the data above, the data is fairly consistent from one set o
 Choosing perk_wave_requirement as the First Perk generally leads to 2212ish skips by wave 3000.  Choosing free_upgrade_chance leads to about 2228ish skips by wave 3000.  So this means that, although the data is close, choosing free_upgrade_chance as the first perk is the better choice.
 
 After the first perk, choosing free_upgrade_chance vs perk_wave_requirement does not make a significant difference.  Probably because by then there aren't many waves left before enemy_level_skip is maximized, or maybe because perk_wave_requirement is more effective at later waves so it's about as good as free_upgrade_chance.
+
+# Possible issues with the simulation
+
+## Cash
+
+While this simulation utilizes probabilities with Free Upgrades, it doesn't take into account __Cash__.  During a run, you earn Cash while defeating enemies, and that Cash can be spent to purchase upgrades.  In general, this Cash is spent on upgrading enemy_level_skip first, since it's important to upgrade it early in the run.
+
+This simulation does not take Cash into account at all.  It only uses free_upgrades to upgrade enemy_level_skip, so the data will show the run taking longer to maximize enemy_level_skip than an actual run.
+
+Having said that, since the Cash used to upgrade enemy_level_skip will be identical regardless of which perks are picked, this is unlikely to change the results in regards to the actual questions this is trying to answer.  So I didn't bother using Cash at all.
