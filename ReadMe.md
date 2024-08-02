@@ -91,3 +91,9 @@ __total__: This is the total of all runs, `17` in the above example.
 # Results
 
 ![results](results.png "Results")
+
+As you can see from the data above, the data is fairly consistent from one set of 1000 runs to another.  So 1000 waves is good enough to establish a reasonable average.
+
+Choosing perk_wave_requirement as the First Perk generally leads to 2212ish skips by wave 3000.  Choosing free_upgrade_chance leads to about 2228ish skips by wave 3000.  So this means that, although the data is close, choosing free_upgrade_chance as the first perk is the better choice.
+
+After the first perk, choosing free_upgrade_chance vs perk_wave_requirement does not make a significant difference.  Probably because by then there aren't many waves left before enemy_level_skip is maximized, or maybe because perk_wave_requirement is more effective at later waves so it's about as good as free_upgrade_chance.
